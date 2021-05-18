@@ -115,6 +115,17 @@
         remote_src: yes
         creates: /var/www/wordpress/wp-settings.php
 
+    - name: Create Wordpress MySQL database
+      mysql_db:
+        name: wordpress
+        state: present
+
+    - name: Create WordPress mysql
+      mysql_user:
+        name: WordPress
+        host: localhost
+        password: bananas
+        priv: wordpress.*:ALL
 
 #HANDLERS
   handlers:
