@@ -4,7 +4,12 @@
   become: true
   hosts: wordpress
   tasks:
+    - name: Intall unzip package
+      package:
+        name: unzip
+        state: present
 # PHP
+
     - name: Add the ondrej PHP PPA
       apt_repository:
         repo: 'ppa:ondrej/php'
