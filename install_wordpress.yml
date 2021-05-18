@@ -4,7 +4,7 @@
   become: true
   hosts: wordpress
   tasks:
-    - name: Intall unzip package
+    - name: Install unzip package
       package:
         name: unzip
         state: present
@@ -107,6 +107,14 @@
         url: https://wordpress.org/latest.zip
         dest: /tmp/wordpress.zip
         checksum: "sha1:{{wp_checksum.content}}"
+
+    - name: Unzip Wordpress
+      unarchive:
+        src: /tmp/wordpress.zip
+        dest: /var/www/book.example.com
+        remote_src: yes
+        creates: /var/www/book.example.com/wp-settings.php
+
 
 #HANDLERS
   handlers:
