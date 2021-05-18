@@ -127,10 +127,24 @@
         password: bananas
         priv: wordpress.*:ALL
 
-    - name: Create wp-config
+    - name: Does the database exist?
+      command: mysql -u root wordpress -e "SELECT ID FROM wordpress.wp_users LIMIT 1;"
+      register: db_exist
+      ignore_errors: true
+      changed_when: false
+
+    - name: Copy Wordpress DB
       template:
-        src: templates/wordpress/wp-config.php.j2
-        dest: /var/www/wordpress/wp-config.php
+        src: templates/wordpress/wp-database.sql.j2
+        dest: /tmp/wp-database.sql
+      when: db_exist.rc > 0
+
+    - name: Import Wordpress DB
+      mysql_db:
+        target: /tmp/wp-database.sql
+        state: import
+        name: wordpress
+      when: db_exist.rc > 0
 
 #HANDLERS
   handlers:
