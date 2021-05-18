@@ -80,11 +80,6 @@
         name: nginx
         state: present
 
-    - name: restart nginx
-      service:
-        name: nginx
-        state: started
-
     - name: create nginx config
       template:
         src: templates/nginx/default.j2
