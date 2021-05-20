@@ -1,10 +1,5 @@
 ---
 # tasks file for wp.wordpress
-- name: Create project folder
-  file:
-    path: /var/www/book.example.com
-    state: directory
-
 - name: Get WordPress checksum
   uri:
     url: https://wordpress.org/latest.zip.sha1
